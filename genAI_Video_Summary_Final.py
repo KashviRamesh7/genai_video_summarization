@@ -40,7 +40,7 @@ def download_youtube_video(youtube_url):
     return os.path.join(videos_directory, downloaded_files[0])
 
 # Extract frames from the video
-def extract_frames(video_path, internal_seconds=5):
+def extract_frames(video_path, interval_seconds=5):
     for file in os.listdir(frames_directory):
         os.remove(os.path.join(frames_directory, file))
 
@@ -55,12 +55,12 @@ def extract_frames(video_path, internal_seconds=5):
         video.set(cv2.CAP_PROP_POS_FRAMES, current_frame)
         success, frame = video.read()
         if not success:
-            current_frame += fps * internal_seconds
+            current_frame += fps * interval_seconds
             continue
 
         frame_path = os.path.join(frames_directory, f"frame_{frame_number:03}.jpg")
         cv2.imwrite(frame_path, frame)
-        current_frame += fps * internal_seconds
+        current_frame += fps * interval_seconds
         frame_number += 1
 
     video.release()
@@ -84,10 +84,10 @@ def turn_into_story(summary):
     return model.invoke(prompt)
 
 # Streamlit UI
-st.title("📺 Kashvi - YouTube/Uploaded Video Summarizer Using Groq LLM")
-st.image("PragyanAI_Transparent.png")
+st.title("📺 Punya - YouTube/Uploaded Video Summarizer Using Groq LLM")
+#st.image("PragyanAI_Transperent.png")
 
-youtube_url = st.text_input("Paste a YouTube video URL:", placeholder="https://www.youtube.com/watch?v=xG74PQrURhMGROQ_API_KEY=%22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%22")
+youtube_url = st.text_input("Paste a YouTube video URL:", placeholder="https://www.youtube.com/watch?v=example")
 
 # Handle video input from YouTube URL
 if youtube_url:
